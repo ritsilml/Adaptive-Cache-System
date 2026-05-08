@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Documentation - Adaptive Cache System</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161f;
+      --surface2: #1a1e2a;
+      --border: #252a38;
+      --accent: #00d4ff;
+      --accent2: #7c3aed;
+      --accent3: #10b981;
+      --text: #e2e8f0;
+      --text2: #8892a4;
+      --text3: #4a5568;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      padding: 24px;
+      background-image:
+        radial-gradient(ellipse at 10% 20%, rgba(0,212,255,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 80%, rgba(124,58,237,0.05) 0%, transparent 50%);
+    }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border);
+    }
+    .header-left h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+    .header-left h1 span { color: var(--accent); }
+    .header-left p { font-family: var(--mono); font-size: 11px; color: var(--text2); margin-top: 4px; }
+    
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-link { color: var(--text2); text-decoration: none; font-family: var(--mono); font-size: 14px; font-weight: 600; transition: color 0.2s; }
+    .nav-link:hover, .nav-link.active { color: var(--accent); }
+
+    /* ── Docs Layout ── */
+    .docs-layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Sidebar ── */
+    .docs-sidebar {
+      position: sticky;
+      top: 24px;
+      align-self: start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .docs-sidebar h3 {
+      font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 16px; font-family: var(--mono);
+    }
+    .docs-sidebar ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .docs-sidebar a {
+      color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 600;
+      transition: color 0.2s; display: block; padding: 6px 10px; border-radius: 6px;
+    }
+    .docs-sidebar a:hover {
+      color: var(--accent); background: var(--surface2);
+    }
+    .docs-sidebar .sub-menu { margin-left: 12px; margin-top: 8px; border-left: 1px solid var(--border); padding-left: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .docs-sidebar .sub-menu a { font-size: 12px; font-weight: 400; padding: 4px 8px; }
+
+    /* ── Content ── */
+    .docs-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      line-height: 1.7;
+    }
+    .docs-content section { margin-bottom: 48px; }
+    .docs-content h2 { color: var(--accent); font-size: 24px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .docs-content h3 { color: var(--text); font-size: 18px; margin-top: 24px; margin-bottom: 12px; }
+    .docs-content p { color: var(--text2); margin-bottom: 16px; font-size: 15px; }
+    .docs-content ul, .docs-content ol { color: var(--text2); margin-bottom: 16px; padding-left: 20px; font-size: 15px; }
+    .docs-content li { margin-bottom: 8px; }
+    
+    .table-wrap { overflow-x: auto; margin-bottom: 20px; border: 1px solid var(--border); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13px; }
+    th { text-align: left; background: var(--surface2); color: var(--text); padding: 12px; border-bottom: 1px solid var(--border); }
+    td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text2); }
+    tr:last-child td { border-bottom: none; }
+
+    .ref-item { font-size: 14px; margin-bottom: 12px; padding-left: 24px; text-indent: -24px; color: var(--text2); }
+    .contributor-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .contributor-card { background: var(--surface2); padding: 16px; border-radius: 8px; border: 1px solid var(--border); }
+    .contributor-name { font-weight: 700; color: var(--text); font-size: 16px; margin-bottom: 4px; }
+    .contributor-id { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+
+    /* Smooth scrolling */
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>⚙ Adaptive <span>Cache</span> Management System</h1>
+    <p>// Interactive Cache Simulation Dashboard</p>
+  </div>
+  <nav class="nav-links">
+    <a href="/" class="nav-link">Simulator</a>
+    <a href="/docs" class="nav-link active">Docs</a>
+    <a href="https://github.com/ritsilml/Adaptive-Cache-System.git" class="nav-link" target="_blank">GitHub</a>
+    <a href="/logout" class="nav-link">Logout</a>
+  </nav>
+  <div style="width: 150px;"></div>
+</header>
+
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <h3>Contents</h3>
+    <ul>
+      <li><a href="#intro">Introduction & Motivation</a></li>
+      <li><a href="#problem">Problem Statement</a></li>
+      <li><a href="#novelty">Novelty & Advanced Aspects</a></li>
+      <li>
+        <a href="#methodology">Methodology</a>
+        <div class="sub-menu">
+          <a href="#data-structs">1. Data Structures</a>
+          <a href="#algo-design">2. Algorithm Design</a>
+          <a href="#complexity">3. Complexity Analysis</a>
+          <a href="#comparison">4. Comparison</a>
+          <a href="#implementation">5. Software Implementation</a>
+          <a href="#results">6. Results & Performance</a>
+          <a href="#tech-stack">7. Tech Stack</a>
+        </div>
+      </li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#contributors">Contributors</a></li>
+    </ul>
+  </aside>
+
+  <main class="docs-content">
+    
+    <section id="intro">
+      <h2>Introduction and Motivation</h2>
+      <p>In modern computing architectures, caching is a critical mechanism used to bridge the speed gap between high-speed processors and slower main memory. Efficient cache management policies are essential to ensure high cache hit rates, thereby reducing latency and improving overall system throughput.</p>
+      <p>The motivation behind this project is to explore, visualize, and implement an Adaptive Cache Management System that dynamically adjusts its eviction policy based on real-time workload characteristics. By comparing traditional static policies (like LRU, LFU, and FIFO) with an adaptive approach, we aim to demonstrate how context-aware caching can yield superior performance in unpredictable environments.</p>
+    </section>
+
+    <section id="problem">
+      <h2>Problem Statement and Real-World Relevance</h2>
+      <p><strong>Problem Statement:</strong> Traditional cache eviction policies (e.g., LRU or LFU) operate on static rules that assume a specific access pattern. LRU performs well for temporal locality, while LFU excels in environments with frequency-based access. However, real-world workloads are rarely uniform; they often shift between temporal bursts, sequential scans, and frequency-heavy access patterns. A static policy inevitably suffers performance degradation when the workload shifts.</p>
+      <p><strong>Real-World Relevance:</strong> In scenarios such as web servers, database caching engines (like Redis or Memcached), and Content Delivery Networks (CDNs), request patterns are highly dynamic. An Adaptive Cache System that detects workload shifts and changes its eviction strategy in real-time ensures consistently high hit rates, preventing costly cache thrashing and reducing server load.</p>
+    </section>
+
+    <section id="novelty">
+      <h2>Novelty or Advanced Implementation Aspects</h2>
+      <p>The primary novelty of this project lies in its <strong>Adaptive Eviction Policy</strong> combined with a <strong>Live Interactive Dashboard</strong>. Instead of hardcoding a single eviction strategy, the system runs multiple "shadow caches" in parallel with the main cache. By continuously monitoring the hit rates of LRU, LFU, and FIFO in the background, the adaptive policy intelligently promotes the best-performing algorithm to become the active cache manager.</p>
+      <p>Additionally, the advanced implementation includes a real-time visual simulation layer where users can manipulate workloads, capacities, and observe the exact state of the cache slots, complete with micro-animations highlighting hits and evictions.</p>
+    </section>
+
+    <section id="methodology">
+      <h2>Methodology Used</h2>
+      
+      <h3 id="data-structs">1. Choice of Data Structures</h3>
+      <ul>
+        <li><strong>LRU (Least Recently Used):</strong> Implemented using a combination of a Hash Map (for <code>O(1)</code> lookups) and a Doubly Linked List (for <code>O(1)</code> updates to the most recently used node).</li>
+        <li><strong>LFU (Least Frequently Used):</strong> Implemented using two Hash Maps: one for mapping keys to values/frequencies, and another for mapping frequencies to a list of keys (managing ties and evictions efficiently).</li>
+        <li><strong>FIFO (First In First Out):</strong> Implemented using an Array-based Queue (or Hash Map combined with a Queue) to track the order of insertion.</li>
+      </ul>
+
+      <h3 id="algo-design">2. Algorithm Design</h3>
+      <p>The core algorithm involves a transparent interface for the cache. On every <code>get</code> or <code>put</code> operation, the system logs the event. For the Adaptive Cache, the algorithm evaluates the performance of the shadow caches over a defined sliding window. If a shadow cache consistently outperforms the active policy by a specific threshold, a state switch is triggered, migrating the cache management logic on the fly without losing the current data state.</p>
+
+      <h3 id="complexity">3. Complexity Analysis (Time & Space)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Policy</th>
+              <th>Time Complexity (Get)</th>
+              <th>Time Complexity (Put)</th>
+              <th>Space Complexity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>LRU</td><td>O(1)</td><td>O(1)</td><td>O(n)</td></tr>
+            <tr><td>LFU</td><td>O(1)*</td><td>O(1)*</td><td>O(n)</td></tr>
+            <tr><td>FIFO</td><td>O(n)</td><td>O(1)</td><td>O(n)</td></tr>
+            <tr><td>Adaptive</td><td>O(1)**</td><td>O(1)**</td><td>O(n) (per shadow cache)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><em>*LFU O(1) achievable with optimized dict + doubly linked list; implemented efficiently via grouped frequencies.<br>**Adaptive includes overhead of maintaining shadow caches.</em></p>
+
+      <h3 id="comparison">4. Comparison Among Alternative Data Structures</h3>
+      <p>While an Array could simulate LRU, updating the MRU item takes O(n) time due to shifting elements. A Doubly Linked List combined with a Hash Map brings this down to O(1), making it strictly superior for cache implementation. Similarly, LFU requires careful grouping of frequencies. A Min-Heap provides O(log n) performance, but maintaining a frequency-to-key-set map allows for O(1) eviction.</p>
+
+      <h3 id="implementation">5. Software Implementation Demonstrating the Working</h3>
+      <p>The solution is constructed using a robust Flask backend serving a Python-based caching engine. The Python engine faithfully implements the data structures and algorithms. The web frontend fetches cache states via REST API endpoints (<code>/api/init</code> and <code>/api/step</code>) and renders the internal state of the cache visually, demonstrating hits, misses, and dynamic policy shifts in real time.</p>
+
+      <h3 id="results">6. Results and Performance Analysis</h3>
+      <p>Empirical testing within the simulator reveals:</p>
+      <ul>
+        <li><strong>Temporal Workloads:</strong> LRU achieves the highest hit rates (~60-70%), while LFU struggles to evict stale high-frequency data.</li>
+        <li><strong>Frequency Workloads:</strong> LFU dominates by retaining core popular items, whereas LRU evicts them if a burst of unique requests occurs.</li>
+        <li><strong>Adaptive Workload:</strong> The Adaptive Cache successfully detects the pattern shifts, migrating from LRU to LFU and vice versa, outperforming any single static policy over a mixed workload lifespan.</li>
+      </ul>
+
+      <h3 id="tech-stack">7. HTML, CSS, JavaScript</h3>
+      <p>The presentation layer leverages modern Web Standards:</p>
+      <ul>
+        <li><strong>HTML5:</strong> Semantic structure of the dashboard and forms.</li>
+        <li><strong>CSS3:</strong> Custom CSS variables, flexbox/grid layouts, glassmorphism UI principles, and CSS micro-animations to create a premium, responsive look without heavy UI libraries.</li>
+        <li><strong>JavaScript (ES6+):</strong> Handles asynchronous API calls using <code>fetch</code>, DOM manipulation, and precise timing control for the simulation loop.</li>
+      </ul>
+    </section>
+
+    <section id="references">
+      <h2>References</h2>
+      <div class="ref-item">[1] W. Zhou et al., "3L-Cache: Low Overhead and Precise Learning-based Eviction Policy for Caches," in <i>Proc. 23rd USENIX Conf. File Storage Technol. (FAST 25)</i>, Santa Clara, CA, USA, Feb. 2025, pp. 1-16.</div>
+      <div class="ref-item">[2] J. Zhang, C. Chen, K. Cai, and J. C. S. Lui, "Incremental Least-Recently-Used Algorithm: Good, Robust, and Predictable Performance," <i>IEEE Trans. Mobile Comput.</i>, vol. 24, no. 7, pp. 6658-6672, July 2025.</div>
+      <div class="ref-item">[3] Y. Khan, R. N. B. Rais, O. Khalid, and I. A. Khan, "A Latency-Aware and Resource-Efficient Content Caching Scheme for Content-Centric Networks," <i>IEEE Access</i>, vol. 13, pp. 139650-139664, Jan. 2025.</div>
+      <div class="ref-item">[4] D. Berend, S. Dolev, S. Kumari, and A. Somani, "DynamicAdaptiveClimb: Rapid Shifting Between Aggressive and Conservative Promotion Regimes," <i>VLDB J.</i>, vol. 34, no. 2, pp. 142-158, Mar. 2025.</div>
+      <div class="ref-item">[5] K. Krishna, "Advancements in cache management: A review of machine learning innovations for enhanced performance and security," <i>Frontiers Artif. Intell.</i>, vol. 8, Art. no. 1441250, Feb. 2025.</div>
+    </section>
+
+    <section id="contributors">
+      <h2>Contributors</h2>
+      <div class="contributor-list">
+        <div class="contributor-card">
+          <div class="contributor-name">Rithika.M</div>
+          <div class="contributor-id">CB.SC.U4AIE25145</div>
+        </div>
+        <div class="contributor-card">
+          <div class="contributor-name">Sai Asrith Alapati</div>
+          <div class="contributor-id">CB.SC.U4AIE25150</div>
+        </div>
+        <div class="contributor-card">
+          <div class="contributor-name">YuthikaSri</div>
+          <div class="contributor-id">CB.SC.U4AIE25163</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
