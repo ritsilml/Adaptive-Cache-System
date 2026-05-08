@@ -1,4 +1,4 @@
-# Adaptive Cache Management System — Complete Overview
+# Adaptive Cache Management System - Complete Overview
 
  This document breaks down exactly how the entire project works, from the caching algorithms under the hood to the visual components on the web dashboard.
 
@@ -56,7 +56,7 @@ The webpage provides a live, visual representation of how the backend is managin
 
 ## 4. How a "Simulation Step" Actually Works
 
-When you click **▶ Start**, the system doesn't run everything instantly. It loops through your workload sequence one by one. Here is the lifecycle of a single step:
+When you click ** Start**, the system doesn't run everything instantly. It loops through your workload sequence one by one. Here is the lifecycle of a single step:
 
 1.  **Frontend Request:** The Javascript grabs the next number in your sequence (e.g., `Key 3`) and sends a `fetch()` request to the Flask server at `/api/step`.
 2.  **Backend Calculation:** Flask receives `Key 3` and passes it to the active Python Cache class (`cache.access(3)`). The Python logic checks its dictionaries/queues to see if `3` is present. It updates its internal hits/misses and potentially evicts old data.
