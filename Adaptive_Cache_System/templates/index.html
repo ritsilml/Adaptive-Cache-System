@@ -376,11 +376,10 @@
       <select id="workloadSelect" onchange="updateWorkload(this.value)">
         <option value="Temporal">Temporal</option>
         <option value="Frequency">Frequency</option>
-        <option value="Sequential">Sequential</option>
         <option value="Custom">Custom</option>
       </select>
       <div style="margin-top:10px; display:none;" id="customWrap">
-        <input id="customInput" type="text" placeholder="e.g. 1,2,3,1,2,4"
+        <input id="customInput" type="text" value="4, 5, 3, 2, 6, 1, 5, 2, 3, 4, 1, 2, 5, 2, 3, 1, 5, 2, 3, 1, 2, 2, 5, 1, 3, 5, 4, 1" placeholder="e.g. 1,2,3,1,2,4"
           style="width:100%;padding:8px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:11px;outline:none;"/>
       </div>
     </div>
@@ -504,7 +503,6 @@
 const WORKLOADS = {
   Temporal:   [1,2,3,1,2,4,1,2,3,1,2,1,3,2,1,4,5,1,2,1],
   Frequency:  [1,1,1,2,2,3,1,1,2,4,1,1,2,3,5,1,2,1,1,2],
-  Sequential: [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8,1,2,3,4],
   Custom: []
 };
 
