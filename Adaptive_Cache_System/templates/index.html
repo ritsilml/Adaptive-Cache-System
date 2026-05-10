@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adaptive Cache Management System</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
   <style>
     :root {
       --bg: #0d0f14;
@@ -25,7 +28,11 @@
       --sans: 'Syne', sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       background: var(--bg);
@@ -34,8 +41,8 @@
       min-height: 100vh;
       padding: 24px;
       background-image:
-        radial-gradient(ellipse at 10% 20%, rgba(0,212,255,0.04) 0%, transparent 50%),
-        radial-gradient(ellipse at 90% 80%, rgba(124,58,237,0.05) 0%, transparent 50%);
+        radial-gradient(ellipse at 10% 20%, rgba(0, 212, 255, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
     }
 
     /* ── Header ── */
@@ -47,53 +54,111 @@
       padding-bottom: 20px;
       border-bottom: 1px solid var(--border);
     }
+
     .header-left h1 {
       font-size: 22px;
       font-weight: 800;
       letter-spacing: -0.5px;
       color: var(--text);
     }
-    .header-left h1 span { color: var(--accent); }
-    .header-left p { font-family: var(--mono); font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+    .header-left h1 span {
+      color: var(--accent);
+    }
+
+    .header-left p {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text2);
+      margin-top: 4px;
+    }
+
     .status-badge {
-      display: flex; align-items: center; gap: 8px;
-      background: var(--surface2); border: 1px solid var(--border);
-      padding: 8px 16px; border-radius: 100px;
-      font-family: var(--mono); font-size: 12px; color: var(--text2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text2);
     }
+
     .status-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--text3); transition: background 0.3s;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text3);
+      transition: background 0.3s;
     }
-    .status-dot.ready { background: var(--accent3); box-shadow: 0 0 8px var(--accent3); }
-    .status-dot.running { background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse 1s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+    .status-dot.ready {
+      background: var(--accent3);
+      box-shadow: 0 0 8px var(--accent3);
+    }
+
+    .status-dot.running {
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.5
+      }
+    }
 
     /* Navigation */
     .nav-links {
-      display: flex; gap: 24px; align-items: center;
+      display: flex;
+      gap: 24px;
+      align-items: center;
     }
+
     .nav-link {
-      color: var(--text2); text-decoration: none; font-family: var(--mono); font-size: 14px; font-weight: 600;
+      color: var(--text2);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 600;
       transition: color 0.2s;
     }
-    .nav-link:hover, .nav-link.active {
+
+    .nav-link:hover,
+    .nav-link.active {
       color: var(--accent);
     }
 
     /* ── Layout ── */
-    .layout { display: grid; grid-template-columns: 220px 1fr; gap: 20px; }
+    .layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 20px;
+    }
 
     /* ── Sidebar ── */
     .sidebar {
-      display: flex; flex-direction: column; gap: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 18px;
     }
+
     .card-label {
       font-family: var(--mono);
       font-size: 10px;
@@ -105,83 +170,175 @@
 
     /* Policy Buttons */
     .policy-btn {
-      display: block; width: 100%; padding: 10px 14px;
-      margin-bottom: 8px; border-radius: 8px;
-      font-family: var(--mono); font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: all 0.2s;
+      display: block;
+      width: 100%;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
       border: 1px solid var(--border);
-      background: var(--surface2); color: var(--text2);
-      text-align: left; letter-spacing: 0.5px;
+      background: var(--surface2);
+      color: var(--text2);
+      text-align: left;
+      letter-spacing: 0.5px;
     }
-    .policy-btn:last-child { margin-bottom: 0; }
-    .policy-btn:hover { border-color: var(--accent); color: var(--accent); }
-    .policy-btn.active {
-      background: rgba(0,212,255,0.1);
+
+    .policy-btn:last-child {
+      margin-bottom: 0;
+    }
+
+    .policy-btn:hover {
       border-color: var(--accent);
       color: var(--accent);
     }
+
+    .policy-btn.active {
+      background: rgba(0, 212, 255, 0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
     .policy-btn .tag {
-      float: right; font-size: 10px;
-      background: var(--surface); padding: 2px 6px; border-radius: 4px;
+      float: right;
+      font-size: 10px;
+      background: var(--surface);
+      padding: 2px 6px;
+      border-radius: 4px;
     }
 
     /* Range */
-    .range-wrap { position: relative; }
+    .range-wrap {
+      position: relative;
+    }
+
     input[type=range] {
-      width: 100%; height: 4px; -webkit-appearance: none;
-      background: var(--border); border-radius: 2px; outline: none; cursor: pointer;
+      width: 100%;
+      height: 4px;
+      -webkit-appearance: none;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
     }
+
     input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 16px; height: 16px;
-      border-radius: 50%; background: var(--accent);
-      box-shadow: 0 0 8px rgba(0,212,255,0.5); cursor: pointer;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+      cursor: pointer;
     }
+
     .range-val {
-      font-family: var(--mono); font-size: 13px;
-      color: var(--accent); margin-top: 10px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      margin-top: 10px;
       font-weight: 600;
     }
 
     /* Select */
     select {
-      width: 100%; padding: 10px; border-radius: 8px;
-      background: var(--surface2); border: 1px solid var(--border);
-      color: var(--text); font-family: var(--mono); font-size: 12px;
-      cursor: pointer; outline: none;
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
     }
-    select:focus { border-color: var(--accent); }
+
+    select:focus {
+      border-color: var(--accent);
+    }
 
     /* Speed */
-    .speed-btns { display: flex; gap: 6px; }
-    .speed-btn {
-      flex: 1; padding: 8px 4px; border-radius: 6px;
-      font-family: var(--mono); font-size: 11px;
-      background: var(--surface2); border: 1px solid var(--border);
-      color: var(--text2); cursor: pointer; transition: all 0.2s;
+    .speed-btns {
+      display: flex;
+      gap: 6px;
     }
-    .speed-btn.active { background: rgba(0,212,255,0.1); border-color: var(--accent); color: var(--accent); }
+
+    .speed-btn {
+      flex: 1;
+      padding: 8px 4px;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .speed-btn.active {
+      background: rgba(0, 212, 255, 0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
 
     /* Action Buttons */
     .btn-start {
-      display: block; width: 100%; padding: 12px;
-      border-radius: 8px; border: none; cursor: pointer;
-      background: var(--accent); color: var(--bg);
-      font-family: var(--mono); font-size: 13px; font-weight: 700;
-      letter-spacing: 0.5px; transition: all 0.2s; margin-bottom: 8px;
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      margin-bottom: 8px;
     }
-    .btn-start:hover { box-shadow: 0 0 20px rgba(0,212,255,0.4); }
-    .btn-start:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+    .btn-start:hover {
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+    }
+
+    .btn-start:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
     .btn-reset {
-      display: block; width: 100%; padding: 10px;
-      border-radius: 8px; cursor: pointer;
-      background: transparent; border: 1px solid var(--border);
-      color: var(--text2); font-family: var(--mono); font-size: 12px;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text2);
+      font-family: var(--mono);
+      font-size: 12px;
       transition: all 0.2s;
     }
-    .btn-reset:hover { border-color: var(--danger); color: var(--danger); }
+
+    .btn-reset:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
 
     /* ── Main Dashboard ── */
-    .main { display: flex; flex-direction: column; gap: 16px; }
+    .main {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
     /* Current Access Banner */
     .access-banner {
@@ -193,563 +350,853 @@
       align-items: center;
       gap: 20px;
     }
-    .access-label { font-family: var(--mono); font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+
+    .access-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
     .access-key {
-      font-family: var(--mono); font-size: 28px; font-weight: 700;
-      color: var(--accent); min-width: 50px;
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 50px;
       transition: all 0.3s;
     }
+
     .access-result {
-      font-family: var(--mono); font-size: 13px; font-weight: 600;
-      padding: 6px 14px; border-radius: 100px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 100px;
     }
-    .access-result.hit { background: rgba(16,185,129,0.15); color: var(--hit); border: 1px solid rgba(16,185,129,0.3); }
-    .access-result.miss { background: rgba(239,68,68,0.15); color: var(--miss); border: 1px solid rgba(239,68,68,0.3); }
-    .access-result.idle { background: var(--surface2); color: var(--text3); border: 1px solid var(--border); }
+
+    .access-result.hit {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--hit);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .access-result.miss {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--miss);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .access-result.idle {
+      background: var(--surface2);
+      color: var(--text3);
+      border: 1px solid var(--border);
+    }
+
     .access-seq {
       flex: 1;
-      display: flex; gap: 4px; flex-wrap: wrap;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
     }
+
     .seq-item {
-      font-family: var(--mono); font-size: 11px;
-      padding: 3px 8px; border-radius: 4px;
-      background: var(--surface2); color: var(--text3);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--surface2);
+      color: var(--text3);
       border: 1px solid var(--border);
       transition: all 0.3s;
     }
-    .seq-item.done { color: var(--text3); background: var(--surface); border-color: transparent; }
-    .seq-item.current { color: var(--accent); background: rgba(0,212,255,0.1); border-color: var(--accent); }
-    .seq-item.hit-done { color: var(--hit); }
-    .seq-item.miss-done { color: var(--miss); }
+
+    .seq-item.done {
+      color: var(--text3);
+      background: var(--surface);
+      border-color: transparent;
+    }
+
+    .seq-item.current {
+      color: var(--accent);
+      background: rgba(0, 212, 255, 0.1);
+      border-color: var(--accent);
+    }
+
+    .seq-item.hit-done {
+      color: var(--hit);
+    }
+
+    .seq-item.miss-done {
+      color: var(--miss);
+    }
 
     /* Metrics */
-    .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
     .metric-card {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 16px;
-      position: relative; overflow: hidden;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
       transition: border-color 0.3s;
     }
+
     .metric-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
       background: var(--accent-color, var(--accent));
     }
+
     .metric-val {
-      font-family: var(--mono); font-size: 26px; font-weight: 700;
-      color: var(--text); margin-bottom: 4px;
+      font-family: var(--mono);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
       transition: all 0.3s;
     }
-    .metric-name { font-family: var(--mono); font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+
+    .metric-name {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
     /* Hit Rate Bar */
     .hitbar-wrap {
       background: var(--surface2);
       border: 1px solid var(--border);
-      border-radius: 12px; padding: 18px 20px;
+      border-radius: 12px;
+      padding: 18px 20px;
     }
-    .hitbar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .hitbar-title { font-family: var(--mono); font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; }
-    .hitbar-pct { font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--accent); }
+
+    .hitbar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .hitbar-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .hitbar-pct {
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
     .hitbar-track {
-      height: 8px; background: var(--border); border-radius: 4px; overflow: hidden;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
     }
+
     .hitbar-fill {
-      height: 100%; border-radius: 4px;
+      height: 100%;
+      border-radius: 4px;
       background: linear-gradient(90deg, var(--accent2), var(--accent));
-      width: 0%; transition: width 0.5s ease;
+      width: 0%;
+      transition: width 0.5s ease;
     }
 
     /* Cache Slots */
-    .slots-section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
-    .slots-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .slots-title { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--text); }
+    .slots-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .slots-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .slots-title {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
     .slots-policy-tag {
-      font-family: var(--mono); font-size: 11px;
-      padding: 4px 10px; border-radius: 100px;
-      background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.3);
       color: var(--accent);
     }
-    .slots-grid { display: flex; gap: 10px; flex-wrap: wrap; }
-    .slot {
-      flex: 1; min-width: 70px;
-      border: 1px solid var(--border);
-      border-radius: 10px; padding: 14px 10px;
-      text-align: center; background: var(--surface2);
-      transition: all 0.3s; position: relative; overflow: hidden;
+
+    .slots-grid {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
+
+    .slot {
+      flex: 1;
+      min-width: 70px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 10px;
+      text-align: center;
+      background: var(--surface2);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
     .slot.filled {
       border-color: var(--accent);
-      background: rgba(0,212,255,0.05);
+      background: rgba(0, 212, 255, 0.05);
     }
+
     .slot.evicted {
       border-color: var(--miss);
-      background: rgba(239,68,68,0.08);
+      background: rgba(239, 68, 68, 0.08);
       animation: flash-out 0.4s ease;
     }
+
     .slot.hit-flash {
       border-color: var(--hit);
-      background: rgba(16,185,129,0.1);
+      background: rgba(16, 185, 129, 0.1);
       animation: flash-hit 0.4s ease;
     }
-    @keyframes flash-out { 0%{transform:scale(1)} 50%{transform:scale(0.95)} 100%{transform:scale(1)} }
-    @keyframes flash-hit { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
-    .slot-num { font-family: var(--mono); font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
-    .slot-key { font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--text); margin: 6px 0 4px; }
-    .slot.filled .slot-key { color: var(--accent); }
-    .slot-meta { font-family: var(--mono); font-size: 9px; color: var(--text3); }
-    .slot-empty .slot-key { color: var(--text3); font-size: 16px; }
+
+    @keyframes flash-out {
+      0% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(0.95)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    @keyframes flash-hit {
+      0% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.05)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    .slot-num {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .slot-key {
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 6px 0 4px;
+    }
+
+    .slot.filled .slot-key {
+      color: var(--accent);
+    }
+
+    .slot-meta {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--text3);
+    }
+
+    .slot-empty .slot-key {
+      color: var(--text3);
+      font-size: 16px;
+    }
 
     /* Switch Banner */
     .switch-banner {
-      position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
-      background: var(--accent2); color: #fff; padding: 12px 24px; border-radius: 8px;
-      font-family: var(--mono); font-size: 14px; font-weight: 700;
-      box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: var(--accent2);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 1000;
     }
-    .switch-banner.show { transform: translateX(-50%) translateY(0); }
+
+    .switch-banner.show {
+      transform: translateX(-50%) translateY(0);
+    }
 
     /* Comparison Bars & Complexity Table */
-    .comp-bars { display: flex; flex-direction: column; gap: 10px; }
-    .bar-row { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11px; }
-    .bar-lbl { width: 35px; color: var(--text2); font-weight: 600; }
-    .bar-bg { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
-    .bar-fg { height: 100%; width: 0%; border-radius: 3px; transition: width 0.4s; }
-    .bar-pct { width: 30px; text-align: right; color: var(--text); font-weight: 600; }
-    
-    .comp-table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 11px; }
-    .comp-table th { text-align: left; color: var(--text3); padding-bottom: 8px; font-weight: 600; border-bottom: 1px solid var(--border); }
-    .comp-table td { padding: 8px 0; color: var(--text); border-bottom: 1px solid var(--surface2); }
+    .comp-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
 
+    .bar-lbl {
+      width: 35px;
+      color: var(--text2);
+      font-weight: 600;
+    }
+
+    .bar-bg {
+      flex: 1;
+      height: 6px;
+      background: var(--surface2);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .bar-fg {
+      height: 100%;
+      width: 0%;
+      border-radius: 3px;
+      transition: width 0.4s;
+    }
+
+    .bar-pct {
+      width: 30px;
+      text-align: right;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+
+    .comp-table th {
+      text-align: left;
+      color: var(--text3);
+      padding-bottom: 8px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comp-table td {
+      padding: 8px 0;
+      color: var(--text);
+      border-bottom: 1px solid var(--surface2);
+    }
   </style>
 </head>
+
 <body>
-<div id="switchBanner" class="switch-banner">
-  <span id="switchMsg">Policy switched: LRU → LFU</span>
-</div>
-
-<!-- Header -->
-<header>
-  <div class="header-left">
-    <h1>⚙ Adaptive <span>Cache</span> Management System</h1>
-    <p>// Interactive Cache Simulation Dashboard</p>
-  </div>
-  <nav class="nav-links">
-    <a href="/" class="nav-link active">Simulator</a>
-    <a href="/docs" class="nav-link">Docs</a>
-    <a href="https://github.com/ritsilml/Adaptive-Cache-System.git" class="nav-link" target="_blank">GitHub</a>
-    <a href="/logout" class="nav-link">Logout</a>
-  </nav>
-  <div class="status-badge">
-    <div class="status-dot" id="statusDot"></div>
-    <span id="statusText">Ready</span>
-  </div>
-</header>
-
-<!-- Layout -->
-<div class="layout">
-
-  <!-- Sidebar -->
-  <div class="sidebar">
-
-    <!-- Policy -->
-    <div class="card">
-      <div class="card-label">Cache Policy</div>
-      <button class="policy-btn active" data-policy="LRU" onclick="selectPolicy('LRU', this)">LRU</button>
-      <button class="policy-btn" data-policy="LFU" onclick="selectPolicy('LFU', this)">LFU</button>
-      <button class="policy-btn" data-policy="FIFO" onclick="selectPolicy('FIFO', this)">FIFO</button>
-      <button class="policy-btn" data-policy="Adaptive" onclick="selectPolicy('Adaptive', this)">Adaptive</button>
-    </div>
-
-    <!-- Cache Size -->
-    <div class="card">
-      <div class="card-label">Cache Capacity</div>
-      <input type="range" min="2" max="8" value="4" id="capSlider" oninput="updateCap(this.value)"/>
-      <div class="range-val"><span id="capVal">4</span> slots</div>
-    </div>
-
-    <!-- Workload -->
-    <div class="card">
-      <div class="card-label">Workload Pattern</div>
-      <select id="workloadSelect" onchange="updateWorkload(this.value)">
-        <option value="Temporal">Temporal</option>
-        <option value="Frequency">Frequency</option>
-        <option value="Custom">Custom</option>
-      </select>
-      <div style="margin-top:10px; display:none;" id="customWrap">
-        <input id="customInput" type="text" value="4, 5, 3, 2, 6, 1, 5, 2, 3, 4, 1, 2, 5, 2, 3, 1, 5, 2, 3, 1, 2, 2, 5, 1, 3, 5, 4, 1" placeholder="e.g. 1,2,3,1,2,4"
-          style="width:100%;padding:8px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:11px;outline:none;"/>
-      </div>
-    </div>
-
-    <!-- Speed -->
-    <div class="card">
-      <div class="card-label">Simulation Speed</div>
-      <div class="speed-btns">
-        <button class="speed-btn" onclick="setSpeed(800,this)">0.5x</button>
-        <button class="speed-btn active" onclick="setSpeed(400,this)">1x</button>
-        <button class="speed-btn" onclick="setSpeed(200,this)">2x</button>
-        <button class="speed-btn" onclick="setSpeed(80,this)">4x</button>
-      </div>
-    </div>
-
-    <!-- Actions -->
-    <div class="card">
-      <div class="card-label">Actions</div>
-      <button class="btn-start" id="startBtn" onclick="startSim()">▶ Start</button>
-      <button class="btn-reset" onclick="resetSim()">↺ Reset</button>
-    </div>
-
-    <!-- Live Hit Rate Comparison -->
-    <div class="card complexity-section">
-      <div class="card-label">Live Hit Rate Comparison</div>
-      <div class="comp-bars">
-        <div class="bar-row"><span class="bar-lbl">LRU</span><div class="bar-bg"><div class="bar-fg" id="barLRU" style="background:var(--hit);"></div></div><span class="bar-pct" id="pctLRU">0%</span></div>
-        <div class="bar-row"><span class="bar-lbl">LFU</span><div class="bar-bg"><div class="bar-fg" id="barLFU" style="background:var(--accent);"></div></div><span class="bar-pct" id="pctLFU">0%</span></div>
-        <div class="bar-row"><span class="bar-lbl">FIFO</span><div class="bar-bg"><div class="bar-fg" id="barFIFO" style="background:var(--warn);"></div></div><span class="bar-pct" id="pctFIFO">0%</span></div>
-      </div>
-    </div>
-
-    <!-- Time & Space Complexity -->
-    <div class="card complexity-section">
-      <div class="card-label">Time & Space Complexity</div>
-      <table class="comp-table">
-        <tr><th>Policy</th><th>Get</th><th>Put</th><th>Space</th></tr>
-        <tr><td>LRU</td><td>O(1)</td><td>O(1)</td><td>O(n)</td></tr>
-        <tr><td>LFU</td><td>O(1)*</td><td>O(1)*</td><td>O(n)</td></tr>
-        <tr><td>FIFO</td><td>O(n)</td><td>O(1)</td><td>O(n)</td></tr>
-      </table>
-      <div style="font-size: 9px; color: var(--text3); margin-top: 8px;">*LFU O(1) achievable with optimized dict+dll, currently O(logn) via heap.</div>
-    </div>
-
+  <div id="switchBanner" class="switch-banner">
+    <span id="switchMsg">Policy switched: LRU → LFU</span>
   </div>
 
-  <!-- Dashboard -->
-  <div class="main">
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1>⚙ Adaptive <span>Cache</span> Management System</h1>
+      <p>// Interactive Cache Simulation Dashboard</p>
+    </div>
+    <nav class="nav-links">
+      <a href="/" class="nav-link active">Simulator</a>
+      <a href="/docs" class="nav-link">Docs</a>
+      <a href="https://github.com/ritsilml/Adaptive-Cache-System.git" class="nav-link" target="_blank">GitHub</a>
+      <a href="/logout" class="nav-link">Logout</a>
+    </nav>
+    <div class="status-badge">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">Ready</span>
+    </div>
+  </header>
 
-    <!-- Current Access Banner -->
-    <div class="access-banner">
-      <div>
-        <div class="access-label">Current Key</div>
-        <div class="access-key" id="accessKey">—</div>
+  <!-- Layout -->
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- Policy -->
+      <div class="card">
+        <div class="card-label">Cache Policy</div>
+        <button class="policy-btn active" data-policy="LRU" onclick="selectPolicy('LRU', this)">LRU</button>
+        <button class="policy-btn" data-policy="LFU" onclick="selectPolicy('LFU', this)">LFU</button>
+        <button class="policy-btn" data-policy="FIFO" onclick="selectPolicy('FIFO', this)">FIFO</button>
+        <button class="policy-btn" data-policy="Adaptive" onclick="selectPolicy('Adaptive', this)">Adaptive</button>
       </div>
-      <div id="accessResult" class="access-result idle">IDLE</div>
-      <div style="flex:1;">
-        <div class="access-label" style="margin-bottom:6px;">Sequence</div>
-        <div class="access-seq" id="seqDisplay"></div>
+
+      <!-- Cache Size -->
+      <div class="card">
+        <div class="card-label">Cache Capacity</div>
+        <input type="range" min="2" max="8" value="4" id="capSlider" oninput="updateCap(this.value)" />
+        <div class="range-val"><span id="capVal">4</span> slots</div>
       </div>
+
+      <!-- Workload -->
+      <div class="card">
+        <div class="card-label">Workload Pattern</div>
+        <select id="workloadSelect" onchange="updateWorkload(this.value)">
+          <option value="Temporal">Temporal</option>
+          <option value="Frequency">Frequency</option>
+          <option value="Custom">Custom</option>
+        </select>
+        <div style="margin-top:10px; display:none;" id="customWrap">
+          <input id="customInput" type="text"
+            value="4, 5, 3, 2, 6, 1, 5, 2, 3, 4, 1, 2, 5, 2, 3, 1, 5, 2, 3, 1, 2, 2, 5, 1, 3, 5, 4, 1"
+            placeholder="e.g. 1,2,3,1,2,4"
+            style="width:100%;padding:8px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:11px;outline:none;" />
+        </div>
+      </div>
+
+      <!-- Speed -->
+      <div class="card">
+        <div class="card-label">Simulation Speed</div>
+        <div class="speed-btns">
+          <button class="speed-btn" onclick="setSpeed(800,this)">0.5x</button>
+          <button class="speed-btn active" onclick="setSpeed(400,this)">1x</button>
+          <button class="speed-btn" onclick="setSpeed(200,this)">2x</button>
+          <button class="speed-btn" onclick="setSpeed(80,this)">4x</button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="card">
+        <div class="card-label">Actions</div>
+        <button class="btn-start" id="startBtn" onclick="startSim()">▶ Start</button>
+        <button class="btn-reset" onclick="resetSim()">↺ Reset</button>
+      </div>
+
+      <!-- Live Hit Rate Comparison -->
+      <div class="card complexity-section">
+        <div class="card-label">Live Hit Rate Comparison</div>
+        <div class="comp-bars">
+          <div class="bar-row"><span class="bar-lbl">LRU</span>
+            <div class="bar-bg">
+              <div class="bar-fg" id="barLRU" style="background:var(--hit);"></div>
+            </div><span class="bar-pct" id="pctLRU">0%</span>
+          </div>
+          <div class="bar-row"><span class="bar-lbl">LFU</span>
+            <div class="bar-bg">
+              <div class="bar-fg" id="barLFU" style="background:var(--accent);"></div>
+            </div><span class="bar-pct" id="pctLFU">0%</span>
+          </div>
+          <div class="bar-row"><span class="bar-lbl">FIFO</span>
+            <div class="bar-bg">
+              <div class="bar-fg" id="barFIFO" style="background:var(--warn);"></div>
+            </div><span class="bar-pct" id="pctFIFO">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Time & Space Complexity -->
+      <div class="card complexity-section">
+        <div class="card-label">Time & Space Complexity</div>
+        <table class="comp-table">
+          <tr>
+            <th>Policy</th>
+            <th>Get</th>
+            <th>Put</th>
+            <th>Space</th>
+          </tr>
+          <tr>
+            <td>LRU</td>
+            <td>O(1)</td>
+            <td>O(1)</td>
+            <td>O(n)</td>
+          </tr>
+          <tr>
+            <td>LFU</td>
+            <td>O(log n)</td>
+            <td>O(log n)</td>
+            <td>O(n)</td>
+          </tr>
+          <tr>
+            <td>FIFO</td>
+            <td>O(1)</td>
+            <td>O(1)</td>
+            <td>O(n)</td>
+          </tr>
+        </table>
+      </div>
+
     </div>
 
-    <!-- Metrics -->
-    <div class="metrics-grid">
-      <div class="metric-card" style="--accent-color: var(--accent)">
-        <div class="metric-val" id="mHitRate">0%</div>
-        <div class="metric-name">Hit Rate</div>
-      </div>
-      <div class="metric-card" style="--accent-color: var(--hit)">
-        <div class="metric-val" id="mHits">0</div>
-        <div class="metric-name">Hits</div>
-      </div>
-      <div class="metric-card" style="--accent-color: var(--miss)">
-        <div class="metric-val" id="mMisses">0</div>
-        <div class="metric-name">Misses</div>
-      </div>
-      <div class="metric-card" style="--accent-color: var(--accent2)">
-        <div class="metric-val" id="mTotal">0</div>
-        <div class="metric-name">Total Access</div>
-      </div>
-    </div>
+    <!-- Dashboard -->
+    <div class="main">
 
-    <!-- Hit Rate Bar -->
-    <div class="hitbar-wrap">
-      <div class="hitbar-header">
-        <span class="hitbar-title">Hit Rate Progress</span>
-        <span class="hitbar-pct" id="hitBarPct">0%</span>
+      <!-- Current Access Banner -->
+      <div class="access-banner">
+        <div>
+          <div class="access-label">Current Key</div>
+          <div class="access-key" id="accessKey">—</div>
+        </div>
+        <div id="accessResult" class="access-result idle">IDLE</div>
+        <div style="flex:1;">
+          <div class="access-label" style="margin-bottom:6px;">Sequence</div>
+          <div class="access-seq" id="seqDisplay"></div>
+        </div>
       </div>
-      <div class="hitbar-track"><div class="hitbar-fill" id="hitBar"></div></div>
-    </div>
 
-    <!-- Cache Slots -->
-    <div class="slots-section">
-      <div class="slots-header">
-        <span class="slots-title">💾 Cache Slots</span>
-        <span class="slots-policy-tag" id="activePolicy">LRU</span>
+      <!-- Metrics -->
+      <div class="metrics-grid">
+        <div class="metric-card" style="--accent-color: var(--accent)">
+          <div class="metric-val" id="mHitRate">0%</div>
+          <div class="metric-name">Hit Rate</div>
+        </div>
+        <div class="metric-card" style="--accent-color: var(--hit)">
+          <div class="metric-val" id="mHits">0</div>
+          <div class="metric-name">Hits</div>
+        </div>
+        <div class="metric-card" style="--accent-color: var(--miss)">
+          <div class="metric-val" id="mMisses">0</div>
+          <div class="metric-name">Misses</div>
+        </div>
+        <div class="metric-card" style="--accent-color: var(--accent2)">
+          <div class="metric-val" id="mTotal">0</div>
+          <div class="metric-name">Total Access</div>
+        </div>
       </div>
-      <div class="slots-grid" id="slotsGrid"></div>
-    </div>
 
-    <!-- Access Log -->
-    <div class="log-section">
-      <div class="log-header">
-        <span class="log-title">📝 Access Log</span>
-        <span class="log-clear" onclick="clearLog()">clear</span>
+      <!-- Hit Rate Bar -->
+      <div class="hitbar-wrap">
+        <div class="hitbar-header">
+          <span class="hitbar-title">Hit Rate Progress</span>
+          <span class="hitbar-pct" id="hitBarPct">0%</span>
+        </div>
+        <div class="hitbar-track">
+          <div class="hitbar-fill" id="hitBar"></div>
+        </div>
       </div>
-      <div class="log-body" id="logBody">
-        <div class="log-empty">Simulation log will appear here...</div>
-      </div>
-    </div>
 
+      <!-- Cache Slots -->
+      <div class="slots-section">
+        <div class="slots-header">
+          <span class="slots-title">Cache Slots</span>
+          <span class="slots-policy-tag" id="activePolicy">LRU</span>
+        </div>
+        <div class="slots-grid" id="slotsGrid"></div>
+      </div>
+
+      <!-- Access Log -->
+      <div class="log-section">
+        <div class="log-header">
+          <span class="log-title">Access Log</span>
+          <span class="log-clear" onclick="clearLog()">clear</span>
+        </div>
+        <div class="log-body" id="logBody">
+          <div class="log-empty">Simulation log will appear here...</div>
+        </div>
+      </div>
+
+    </div>
   </div>
-</div>
 
-<script>
+  <script>
 
 
-// ════════════════════════════════════════
-//  WORKLOADS
-// ════════════════════════════════════════
-const WORKLOADS = {
-  Temporal:   [1,2,3,1,2,4,1,2,3,1,2,1,3,2,1,4,5,1,2,1],
-  Frequency:  [1,1,1,2,2,3,1,1,2,4,1,1,2,3,5,1,2,1,1,2],
-  Custom: []
-};
+    // ════════════════════════════════════════
+    //  WORKLOADS
+    // ════════════════════════════════════════
+    const WORKLOADS = {
+      Temporal: [9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 8, 1, 2, 3, 4, 1, 2, 1, 2, 5, 6, 1, 2, 1, 2, 10, 11, 1, 2, 1, 2],
+      Frequency: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 1, 2, 1, 2, 1, 2, 7, 8, 9, 10, 1, 2, 1, 2, 1, 2],
+      Custom: []
+    };
 
-// ════════════════════════════════════════
-//  STATE
-// ════════════════════════════════════════
-let policy='LRU', capacity=4, workload='Temporal';
-let simIdx=0, simSeq=[];
-let isRunning=false;
-let speed=400, logCount=0, firstLog=true;
+    // ════════════════════════════════════════
+    //  STATE
+    // ════════════════════════════════════════
+    let policy = 'LRU', capacity = 4, workload = 'Temporal';
+    let simIdx = 0, simSeq = [];
+    let isRunning = false;
+    let speed = 400, logCount = 0, firstLog = true;
 
-// ════════════════════════════════════════
-//  UI HELPERS
-// ════════════════════════════════════════
-function selectPolicy(p, btn){
-  policy=p;
-  document.querySelectorAll('.policy-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-function updateCap(v){ capacity=+v; document.getElementById('capVal').textContent=v; }
-function updateWorkload(v){
-  workload=v;
-  document.getElementById('customWrap').style.display = v==='Custom'?'block':'none';
-}
-function setSpeed(ms, btn){
-  speed=ms;
-  document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-function clearLog(){ document.getElementById('logBody').innerHTML='<div class="log-empty">Log cleared.</div>'; firstLog=true; logCount=0; }
-
-function buildSlots(cap){
-  const g=document.getElementById('slotsGrid');
-  g.innerHTML='';
-  for(let i=0;i<cap;i++){
-    const d=document.createElement('div');
-    d.className='slot slot-empty'; d.id=`slot${i}`;
-    d.innerHTML=`<div class="slot-num">Slot ${i+1}</div><div class="slot-key">—</div><div class="slot-meta"></div>`;
-    g.appendChild(d);
-  }
-}
-
-function updateSlots(slotData, hitKey, evicted){
-  const cap=capacity;
-  for(let i=0;i<cap;i++){
-    const el=document.getElementById(`slot${i}`);
-    if(!el)continue;
-    const s=slotData[i];
-    if(s){
-      el.className='slot filled';
-      el.innerHTML=`<div class="slot-num">Slot ${i+1}</div><div class="slot-key">${s.key}</div><div class="slot-meta">${s.meta||''}</div>`;
-      if(s.key==hitKey){ el.classList.add('hit-flash'); setTimeout(()=>el.classList.remove('hit-flash'),400); }
-    } else {
-      el.className='slot slot-empty';
-      el.innerHTML=`<div class="slot-num">Slot ${i+1}</div><div class="slot-key">—</div><div class="slot-meta"></div>`;
+    // ════════════════════════════════════════
+    //  UI HELPERS
+    // ════════════════════════════════════════
+    function selectPolicy(p, btn) {
+      policy = p;
+      document.querySelectorAll('.policy-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     }
-  }
-}
+    function updateCap(v) { capacity = +v; document.getElementById('capVal').textContent = v; }
+    function updateWorkload(v) {
+      workload = v;
+      document.getElementById('customWrap').style.display = v === 'Custom' ? 'block' : 'none';
+    }
+    function setSpeed(ms, btn) {
+      speed = ms;
+      document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    function clearLog() { document.getElementById('logBody').innerHTML = '<div class="log-empty">Log cleared.</div>'; firstLog = true; logCount = 0; }
 
-function buildSeq(seq){
-  const d=document.getElementById('seqDisplay');
-  d.innerHTML='';
-  seq.forEach((k,i)=>{
-    const s=document.createElement('span');
-    s.className='seq-item'; s.id=`seq${i}`; s.textContent=k;
-    d.appendChild(s);
-  });
-}
-function markSeq(idx, isHit){
-  document.querySelectorAll('.seq-item').forEach(s=>s.classList.remove('current'));
-  const el=document.getElementById(`seq${idx}`);
-  if(el){ el.classList.add('current'); }
-  if(idx>0){
-    const prev=document.getElementById(`seq${idx-1}`);
-    if(prev){ prev.classList.remove('current'); prev.classList.add(isHit?'hit-done':'miss-done'); }
-  }
-}
+    function buildSlots(cap) {
+      const g = document.getElementById('slotsGrid');
+      g.innerHTML = '';
+      for (let i = 0; i < cap; i++) {
+        const d = document.createElement('div');
+        d.className = 'slot slot-empty'; d.id = `slot${i}`;
+        d.innerHTML = `<div class="slot-num">Slot ${i + 1}</div><div class="slot-key">—</div><div class="slot-meta"></div>`;
+        g.appendChild(d);
+      }
+    }
 
-function addLog(type, msg){
-  const lb=document.getElementById('logBody');
-  if(firstLog){ lb.innerHTML=''; firstLog=false; }
-  logCount++;
-  const e=document.createElement('div');
-  e.className='log-entry';
-  e.innerHTML=`<span class="log-idx">#${logCount}</span><span class="${type}">${msg}</span>`;
-  lb.appendChild(e);
-  lb.scrollTop=lb.scrollHeight;
-}
+    function updateSlots(slotData, hitKey, evicted) {
+      const cap = capacity;
+      for (let i = 0; i < cap; i++) {
+        const el = document.getElementById(`slot${i}`);
+        if (!el) continue;
+        const s = slotData[i];
+        if (s) {
+          el.className = 'slot filled';
+          el.innerHTML = `<div class="slot-num">Slot ${i + 1}</div><div class="slot-key">${s.key}</div><div class="slot-meta">${s.meta || ''}</div>`;
+          if (s.key == hitKey) { el.classList.add('hit-flash'); setTimeout(() => el.classList.remove('hit-flash'), 400); }
+        } else {
+          el.className = 'slot slot-empty';
+          el.innerHTML = `<div class="slot-num">Slot ${i + 1}</div><div class="slot-key">—</div><div class="slot-meta"></div>`;
+        }
+      }
+    }
 
-function updateMetrics(hits,misses,total,rate){
-  document.getElementById('mHits').textContent=hits;
-  document.getElementById('mMisses').textContent=misses;
-  document.getElementById('mTotal').textContent=total;
-  document.getElementById('mHitRate').textContent=rate+'%';
-  document.getElementById('hitBar').style.width=rate+'%';
-  document.getElementById('hitBarPct').textContent=rate+'%';
-}
+    function buildSeq(seq) {
+      const d = document.getElementById('seqDisplay');
+      d.innerHTML = '';
+      seq.forEach((k, i) => {
+        const s = document.createElement('span');
+        s.className = 'seq-item'; s.id = `seq${i}`; s.textContent = k;
+        d.appendChild(s);
+      });
+    }
+    function markSeq(idx, isHit) {
+      document.querySelectorAll('.seq-item').forEach(s => s.classList.remove('current'));
+      const el = document.getElementById(`seq${idx}`);
+      if (el) { el.classList.add('current'); }
+      if (idx > 0) {
+        const prev = document.getElementById(`seq${idx - 1}`);
+        if (prev) { prev.classList.remove('current'); prev.classList.add(isHit ? 'hit-done' : 'miss-done'); }
+      }
+    }
 
-// ════════════════════════════════════════
-//  SIMULATION
-// ════════════════════════════════════════
-async function startSim(){
-  if(isRunning){ pauseSim(); return; }
+    function addLog(type, msg) {
+      const lb = document.getElementById('logBody');
+      if (firstLog) { lb.innerHTML = ''; firstLog = false; }
+      logCount++;
+      const e = document.createElement('div');
+      e.className = 'log-entry';
+      e.innerHTML = `<span class="log-idx">#${logCount}</span><span class="${type}">${msg}</span>`;
+      lb.appendChild(e);
+      lb.scrollTop = lb.scrollHeight;
+    }
 
-  // Build sequence
-  if(workload==='Custom'){
-    const raw=document.getElementById('customInput').value;
-    simSeq=raw.split(',').map(x=>x.trim()).filter(Boolean).map(Number).filter(x=>!isNaN(x));
-    if(!simSeq.length){ alert('Enter a valid custom sequence like: 1,2,3,1,2'); return; }
-  } else {
-    simSeq=[...WORKLOADS[workload]];
-  }
+    function updateMetrics(hits, misses, total, rate) {
+      document.getElementById('mHits').textContent = hits;
+      document.getElementById('mMisses').textContent = misses;
+      document.getElementById('mTotal').textContent = total;
+      document.getElementById('mHitRate').textContent = rate + '%';
+      document.getElementById('hitBar').style.width = rate + '%';
+      document.getElementById('hitBarPct').textContent = rate + '%';
+    }
 
-  // Init backend cache
-  try {
-    const res = await fetch('/api/init', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ policy, capacity })
-    });
-    if(!res.ok){ alert('Failed to init backend'); return; }
-  } catch(e) {
-    alert('Could not connect to backend server');
-    return;
-  }
+    // ════════════════════════════════════════
+    //  SIMULATION
+    // ════════════════════════════════════════
+    async function startSim() {
+      if (isRunning) { pauseSim(); return; }
 
-  buildSlots(capacity);
-  buildSeq(simSeq);
+      // Build sequence
+      if (workload === 'Custom') {
+        const raw = document.getElementById('customInput').value;
+        simSeq = raw.split(',').map(x => x.trim()).filter(Boolean).map(Number).filter(x => !isNaN(x));
+        if (!simSeq.length) { alert('Enter a valid custom sequence like: 1,2,3,1,2'); return; }
+      } else {
+        simSeq = [...WORKLOADS[workload]];
+      }
 
-  document.getElementById('activePolicy').textContent=policy;
-  document.getElementById('startBtn').textContent='⏸ Pause';
-  document.getElementById('statusDot').className='status-dot running';
-  document.getElementById('statusText').textContent='Running';
+      // Init backend cache
+      try {
+        const res = await fetch('/api/init', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ policy, capacity })
+        });
+        if (!res.ok) { alert('Failed to init backend'); return; }
+      } catch (e) {
+        alert('Could not connect to backend server');
+        return;
+      }
 
-  isRunning = true;
-  runLoop();
-}
+      buildSlots(capacity);
+      buildSeq(simSeq);
 
-function pauseSim(){
-  isRunning = false;
-  document.getElementById('startBtn').textContent='▶ Resume';
-  document.getElementById('statusDot').className='status-dot ready';
-  document.getElementById('statusText').textContent='Paused';
-}
+      document.getElementById('activePolicy').textContent = policy;
+      document.getElementById('startBtn').textContent = '⏸ Pause';
+      document.getElementById('statusDot').className = 'status-dot running';
+      document.getElementById('statusText').textContent = 'Running';
 
-function resetSim(){
-  isRunning = false;
-  simIdx=0;
-  document.getElementById('startBtn').textContent='▶ Start';
-  document.getElementById('startBtn').disabled=false;
-  document.getElementById('statusDot').className='status-dot';
-  document.getElementById('statusText').textContent='Ready';
-  document.getElementById('accessKey').textContent='—';
-  document.getElementById('accessResult').className='access-result idle';
-  document.getElementById('accessResult').textContent='IDLE';
-  document.getElementById('seqDisplay').innerHTML='';
-  updateMetrics(0,0,0,0);
-  buildSlots(capacity);
-  clearLog();
-  document.getElementById('activePolicy').textContent=policy;
-}
+      isRunning = true;
+      runLoop();
+    }
 
-async function runLoop(){
-  while(isRunning && simIdx < simSeq.length){
-    await step();
-    await new Promise(r => setTimeout(r, speed));
-  }
-}
+    function pauseSim() {
+      isRunning = false;
+      document.getElementById('startBtn').textContent = '▶ Resume';
+      document.getElementById('statusDot').className = 'status-dot ready';
+      document.getElementById('statusText').textContent = 'Paused';
+    }
 
-async function step(){
-  if(simIdx>=simSeq.length){ endSim(); return; }
-  const key=simSeq[simIdx];
+    function resetSim() {
+      isRunning = false;
+      simIdx = 0;
+      document.getElementById('startBtn').textContent = '▶ Start';
+      document.getElementById('startBtn').disabled = false;
+      document.getElementById('statusDot').className = 'status-dot';
+      document.getElementById('statusText').textContent = 'Ready';
+      document.getElementById('accessKey').textContent = '—';
+      document.getElementById('accessResult').className = 'access-result idle';
+      document.getElementById('accessResult').textContent = 'IDLE';
+      document.getElementById('seqDisplay').innerHTML = '';
+      updateMetrics(0, 0, 0, 0);
+      buildSlots(capacity);
+      clearLog();
+      document.getElementById('activePolicy').textContent = policy;
+    }
 
-  // Update sequence display
-  markSeq(simIdx, false); 
+    async function runLoop() {
+      while (isRunning && simIdx < simSeq.length) {
+        await step();
+        await new Promise(r => setTimeout(r, speed));
+      }
+    }
 
-  // Backend cache access
-  let data;
-  try {
-    const res = await fetch('/api/step', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key })
-    });
-    data = await res.json();
-  } catch(e) {
-    console.error('API Error:', e);
-    pauseSim();
-    return;
-  }
+    async function step() {
+      if (simIdx >= simSeq.length) { endSim(); return; }
+      const key = simSeq[simIdx];
 
-  let hit = data.hit;
+      // Update sequence display
+      markSeq(simIdx, false);
 
-  // UI updates
-  document.getElementById('accessKey').textContent=key;
-  document.getElementById('activePolicy').textContent=data.active_policy || policy;
+      // Backend cache access
+      let data;
+      try {
+        const res = await fetch('/api/step', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key })
+        });
+        data = await res.json();
+      } catch (e) {
+        console.error('API Error:', e);
+        pauseSim();
+        return;
+      }
 
-  if(data.switch_event) {
-    const b=document.getElementById('switchBanner');
-    document.getElementById('switchMsg').textContent=`Policy switched: ${data.switch_event.from} → ${data.switch_event.to}`;
-    b.classList.add('show');
-    setTimeout(()=>b.classList.remove('show'), 2500);
-    addLog('log-switch', `⟲ Switched to ${data.switch_event.to}`);
-  }
+      let hit = data.hit;
 
-  if(data.comp) {
-    document.getElementById('barLRU').style.width=data.comp.LRU+'%'; document.getElementById('pctLRU').textContent=data.comp.LRU+'%';
-    document.getElementById('barLFU').style.width=data.comp.LFU+'%'; document.getElementById('pctLFU').textContent=data.comp.LFU+'%';
-    document.getElementById('barFIFO').style.width=data.comp.FIFO+'%'; document.getElementById('pctFIFO').textContent=data.comp.FIFO+'%';
-  }
+      // UI updates
+      document.getElementById('accessKey').textContent = key;
+      document.getElementById('activePolicy').textContent = data.active_policy || policy;
 
-  const resEl=document.getElementById('accessResult');
-  if(hit){ resEl.className='access-result hit'; resEl.textContent='HIT ✓'; }
-  else { resEl.className='access-result miss'; resEl.textContent='MISS ✗'; }
+      if (data.switch_event) {
+        const b = document.getElementById('switchBanner');
+        document.getElementById('switchMsg').textContent = `Policy switched: ${data.switch_event.from} → ${data.switch_event.to}`;
+        b.classList.add('show');
+        setTimeout(() => b.classList.remove('show'), 2500);
+        addLog('log-switch', `⟲ Switched to ${data.switch_event.to}`);
+      }
 
-  // Sequence coloring
-  const seqEl=document.getElementById(`seq${simIdx}`);
-  if(seqEl){ seqEl.className='seq-item current'; }
+      if (data.comp) {
+        document.getElementById('barLRU').style.width = data.comp.LRU + '%'; document.getElementById('pctLRU').textContent = data.comp.LRU + '%';
+        document.getElementById('barLFU').style.width = data.comp.LFU + '%'; document.getElementById('pctLFU').textContent = data.comp.LFU + '%';
+        document.getElementById('barFIFO').style.width = data.comp.FIFO + '%'; document.getElementById('pctFIFO').textContent = data.comp.FIFO + '%';
+      }
 
-  // Slots
-  updateSlots(data.slots, hit?key:null, null);
+      const resEl = document.getElementById('accessResult');
+      if (hit) { resEl.className = 'access-result hit'; resEl.textContent = 'HIT ✓'; }
+      else { resEl.className = 'access-result miss'; resEl.textContent = 'MISS ✗'; }
 
-  // Metrics
-  const t=data.total, r=t?Math.round(data.hits/t*100):0;
-  updateMetrics(data.hits, data.misses, t, r);
+      // Sequence coloring
+      const seqEl = document.getElementById(`seq${simIdx}`);
+      if (seqEl) { seqEl.className = 'seq-item current'; }
 
-  // Log
-  if(hit) addLog('log-hit', `Key ${key} → HIT`);
-  else addLog('log-miss', `Key ${key} → MISS → inserted`);
+      // Slots
+      updateSlots(data.slots, hit ? key : null, null);
 
-  simIdx++;
-  if(simIdx>=simSeq.length){ endSim(); }
-}
+      // Metrics
+      const t = data.total, r = t ? Math.round(data.hits / t * 100) : 0;
+      updateMetrics(data.hits, data.misses, t, r);
 
-function endSim(){
-  isRunning = false;
-  document.getElementById('startBtn').textContent='▶ Start';
-  document.getElementById('startBtn').disabled=true;
-  document.getElementById('statusDot').className='status-dot ready';
-  document.getElementById('statusText').textContent='Complete';
-  addLog('log-switch', '── Simulation complete ──');
-  // Mark all remaining seq items
-  document.querySelectorAll('.seq-item').forEach(s=>{ if(!s.classList.contains('hit-done')&&!s.classList.contains('miss-done')) s.classList.add('done'); });
-}
+      // Log
+      if (hit) addLog('log-hit', `Key ${key} → HIT`);
+      else addLog('log-miss', `Key ${key} → MISS → inserted`);
 
-// Init
-buildSlots(4);
-</script>
+      simIdx++;
+      if (simIdx >= simSeq.length) { endSim(); }
+    }
+
+    function endSim() {
+      isRunning = false;
+      document.getElementById('startBtn').textContent = '▶ Start';
+      document.getElementById('startBtn').disabled = true;
+      document.getElementById('statusDot').className = 'status-dot ready';
+      document.getElementById('statusText').textContent = 'Complete';
+      addLog('log-switch', '── Simulation complete ──');
+      // Mark all remaining seq items
+      document.querySelectorAll('.seq-item').forEach(s => { if (!s.classList.contains('hit-done') && !s.classList.contains('miss-done')) s.classList.add('done'); });
+    }
+
+    // Init
+    buildSlots(4);
+  </script>
 </body>
+
 </html>
