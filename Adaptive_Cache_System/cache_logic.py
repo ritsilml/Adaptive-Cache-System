@@ -116,24 +116,29 @@ class FIFOCache:
     def __init__(self, capacity):
         self.capacity = capacity
         self.queue = deque()
+        self.cache = set()
         self.hits = 0
         self.misses = 0
 
     def access(self, key):
-        for k, v in self.queue:
-            if k == key:
-                self.hits += 1
-                return True
+        if key in self.cache:
+            self.hits += 1
+            return True
+            
         self.misses += 1
         if self.capacity == 0:
             return False
+            
         if len(self.queue) >= self.capacity:
-            self.queue.popleft()
-        self.queue.append((key, key))
+            oldest_key = self.queue.popleft()
+            self.cache.remove(oldest_key)
+            
+        self.queue.append(key)
+        self.cache.add(key)
         return False
 
     def slots(self):
-        return [{"key": k, "meta": "oldest←"} for k, v in self.queue]
+        return [{"key": k, "meta": "oldest←"} for k in self.queue]
 
     def hit_rate(self):
         t = self.hits + self.misses
